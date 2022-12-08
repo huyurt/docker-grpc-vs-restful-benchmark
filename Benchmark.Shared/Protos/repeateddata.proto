@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Benchmark.Api.Grpc.Protos.RepeatedData";
+
+package repeateddata;
+
+service RepeatedDataService {
+
+	rpc GetString (GetRepeatedDataRequest) returns (ApiResponse) {}
+
+	rpc GetStringStream (GetRepeatedDataRequest) returns (stream ApiResponse) {}
+
+	rpc GetStringArray (GetRepeatedDataRequest) returns (GetRepeatedDataResponse) {}
+
+	rpc GetStringArrayStream (GetRepeatedDataRequest) returns (stream GetRepeatedDataResponse) {}
+
+}
+
+message GetRepeatedDataRequest {
+	int32 Count = 1;
+}
+
+message GetRepeatedDataResponse {
+	repeated string Message = 1;
+}
+
+message ApiResponse {
+	string Message = 1;
+}

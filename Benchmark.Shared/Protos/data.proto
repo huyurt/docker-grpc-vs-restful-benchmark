@@ -1,0 +1,93 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Benchmark.Api.Grpc.Protos.Data";
+
+package data;
+
+service DataService {
+
+	rpc GetString (ApiRequest) returns (ApiResponse) {}
+
+	rpc GetStringStream (ApiRequest) returns (stream ApiResponse) {}
+
+	rpc GetIntArray (GetRepeatedDataRequest) returns (GetIntArrayResponse) {}
+
+	rpc GetIntArrayStream (GetRepeatedDataRequest) returns (stream GetIntArrayResponse) {}
+
+	rpc GetFile (ApiRequest) returns (GetFileResponse) {}
+
+	rpc GetFileStream (ApiRequest) returns (stream GetFileResponse) {}
+
+	rpc GetUserModel (GetRepeatedDataRequest) returns (GetUserModelResponse) {}
+
+	rpc GetUserModelStream (GetRepeatedDataRequest) returns (stream GetUserModelResponse) {}
+
+	rpc GetUserModelByFilter (GetUserModelByFilterRequest) returns (GetUserModelResponse) {}
+
+	rpc GetUserModelByFilterStream (GetUserModelByFilterRequest) returns (stream GetUserModelResponse) {}
+
+}
+
+message ApiRequest {
+	int32 Index = 1;
+}
+
+message ApiResponse {
+	string Message = 1;
+}
+
+message GetRepeatedDataRequest {
+	int32 Count = 1;
+}
+
+message GetIntArrayResponse {
+	repeated int32 Message = 1;
+}
+
+message GetFileResponse {
+	bytes File = 1;
+}
+
+message GetUserModelByFilterRequest {
+    google.protobuf.Int64Value Id = 1;
+    google.protobuf.StringValue ReferenceKey = 2;
+    google.protobuf.StringValue Name = 4;
+    google.protobuf.StringValue Surname = 6;
+    google.protobuf.StringValue Email = 8;
+}
+
+message GetUserModelResponse {
+
+    message Friend {
+        int64 Id = 1;
+        string Name = 2;
+        string Surname = 3;
+    }
+
+    message Contact {
+        int64 Phone = 1;
+        string Address = 2;
+    }
+
+    message User {
+        int64 Id = 1;
+        string ReferenceKey = 2;
+        double Balance = 3;
+        string Name = 4;
+        google.protobuf.StringValue MiddleName = 5;
+        string Surname = 6;
+        google.protobuf.StringValue BirthDate = 7;
+        string Email = 8;
+        google.protobuf.Int64Value IdentityNo = 9;
+        bool IsActive = 10;
+        string Registered = 11;
+        repeated string Tags = 12;
+        repeated Contact Contacts = 13;
+        repeated Friend Friends = 14;
+        repeated int64 FriendIds = 15;
+    }
+
+    repeated User Users = 1;
+}
